@@ -1,0 +1,3 @@
+<launch>
+    <mode pkg="my_py_pkg" exec="number_publisher" /> 
+</launch>

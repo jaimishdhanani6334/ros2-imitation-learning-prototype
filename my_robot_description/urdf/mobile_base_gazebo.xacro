@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <gazebo reference="caster_wheel_link">
+
+        <!-- Friction -->
+        <mu1>0.1</mu1>
+        <mu2>0.1</mu2>
+
+        <!-- Contact stiffness -->
+        <kp>100000.0</kp>
+
+        <!-- Contact damping -->
+        <kd>10.0</kd>
+
+        <!-- Reduce slipping -->
+        <minDepth>0.001</minDepth>
+        <maxVel>0.1</maxVel>
+
+    </gazebo>
+
+    <gazebo reference="left_finger_link">
+        <mu1>5.0</mu1>
+        <mu2>5.0</mu2>
+    </gazebo>
+
+    <gazebo reference="right_finger_link">
+        <mu1>5.0</mu1>
+        <mu2>5.0</mu2>
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-diff-drive-system" 
+            name="gz::sim::v8::systems::DiffDrive">
+
+           
+            <left_joint>base_left_wheel_joint</left_joint>
+            <right_joint>base_right_wheel_joint</right_joint>
+
+            <wheel_separation>0.45</wheel_separation>
+            <wheel_radius>0.1</wheel_radius>
+
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::v8::systems::JointStatePublisher">
+
+            <topic>/world/empty/model/my_robot/joint_states</topic>
+
+            <joint_name>base_left_wheel_joint</joint_name>
+            <joint_name>base_right_wheel_joint</joint_name>
+
+            <joint_name>base_to_forearm_joint</joint_name>
+            <joint_name>forearm_to_hand_joint</joint_name>
+
+            <joint_name>left_finger_joint</joint_name>
+            <joint_name>right_finger_joint</joint_name>
+
+            <update_rate>30</update_rate>
+
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+
+            <joint_name>left_finger_joint</joint_name>
+
+            <topic>/left_finger_joint/cmd_pos</topic>
+
+            <p_gain>10</p_gain>
+
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+
+            <joint_name>right_finger_joint</joint_name>
+
+            <topic>/right_finger_joint/cmd_pos</topic>
+
+            <p_gain>10</p_gain>
+
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+
+            <joint_name>base_to_forearm_joint</joint_name>
+
+            <topic>/base_to_forearm_joint/cmd_pos</topic>
+
+            <p_gain>10</p_gain>
+
+        </plugin>
+    </gazebo>
+
+
+
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+
+            <joint_name>forearm_to_hand_joint</joint_name>
+
+            <topic>/forearm_to_hand_joint/cmd_pos</topic>
+
+            <p_gain>10</p_gain>
+
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-detachable-joint-system"
+            name="gz::sim::systems::DetachableJoint">
+
+            <parent_link>hand_link</parent_link>
+            <child_model>pick_box</child_model>
+            <child_link>box_link</child_link>
+
+            <detach_topic>/gripper/detach</detach_topic>
+            <attach_topic>/gripper/attach</attach_topic>
+
+            <start_attached>false</start_attached>
+
+        </plugin>
+    </gazebo>
+
+
+</robot>

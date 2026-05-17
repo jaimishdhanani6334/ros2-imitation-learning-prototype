@@ -22,7 +22,7 @@ manual control
 - Gazebo simulation
 - Robotic arm with gripper
 - Pick and place task
-- Fake grasp system
+- real grasp physics
 - Dataset recording using CSV
 - Autonomous trajectory replay
 
@@ -76,11 +76,7 @@ Reads the recorded CSV file and publishes the same joint commands again to repla
 ```bash
 ros2 launch my_robot_bringup my_robot_gazebo.launch.xml
 ```
-## Detach box initially
 
-```bash
-ros2 topic pub /gripper/detach std_msgs/msg/Empty "{}" 
-```
 
 ## Start recording
 
@@ -93,11 +89,11 @@ ros2 run my_robot_bringup record_node.py
 ### Open gripper
 
 ```bash
-ros2 topic pub /left_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: 0.3}" 
+ros2 topic pub /left_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: 0.45}" 
 ```
 
 ```bash
-ros2 topic pub /right_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: 0.3}" 
+ros2 topic pub /right_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: 0.45}" 
 ```
 
 ### Move arm
@@ -108,23 +104,18 @@ ros2 topic pub /base_to_forearm_joint/cmd_pos std_msgs/msg/Float64 "{data: 0.65}
 
 
 ```bash
-ros2 topic pub /forearm_to_hand_joint/cmd_pos std_msgs/msg/Float64 "{data: 1.1}" 
+ros2 topic pub /forearm_to_hand_joint/cmd_pos std_msgs/msg/Float64 "{data: 1.15}" 
 ```
 ### close gripper
 
 ```bash
-ros2 topic pub /left_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: 0.0}" 
+ros2 topic pub /left_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: -0.2}" 
 ```
 
 ```bash
-ros2 topic pub /right_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: 0.0}" 
+ros2 topic pub /right_finger_joint/cmd_pos std_msgs/msg/Float64 "{data: -0.2}" 
 ```
 
-### Attach object
-
-```bash
-ros2 topic pub /gripper/attach std_msgs/msg/Empty "{}" 
-```
 
 ### Move arm
 

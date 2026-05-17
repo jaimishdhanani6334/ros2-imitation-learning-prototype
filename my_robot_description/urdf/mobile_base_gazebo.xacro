@@ -22,13 +22,13 @@
     </gazebo>
 
     <gazebo reference="left_finger_link">
-        <mu1>5.0</mu1>
-        <mu2>5.0</mu2>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
     </gazebo>
 
     <gazebo reference="right_finger_link">
-        <mu1>5.0</mu1>
-        <mu2>5.0</mu2>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
     </gazebo>
 
     <gazebo>
@@ -78,7 +78,7 @@
 
             <topic>/left_finger_joint/cmd_pos</topic>
 
-            <p_gain>10</p_gain>
+            <p_gain>30</p_gain>
 
         </plugin>
     </gazebo>
@@ -92,7 +92,7 @@
 
             <topic>/right_finger_joint/cmd_pos</topic>
 
-            <p_gain>10</p_gain>
+            <p_gain>30</p_gain>
 
         </plugin>
     </gazebo>
@@ -128,7 +128,7 @@
         </plugin>
     </gazebo>
 
-    <gazebo>
+    <!-- <gazebo>
         <plugin
             filename="gz-sim-detachable-joint-system"
             name="gz::sim::systems::DetachableJoint">
@@ -143,7 +143,7 @@
             <start_attached>false</start_attached>
 
         </plugin>
-    </gazebo>
+    </gazebo> -->
 
 
 </robot>
